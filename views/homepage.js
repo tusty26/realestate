@@ -73,17 +73,6 @@ module.exports = (properties) => `
         .btn-details { display: block; width: 100%; padding: 12px; background: var(--gold); color: #fff; text-align: center; text-decoration: none; font-weight: bold; transition: 0.3s; }
         .btn-details:hover { background: var(--black); }
 
-        /* Joint-Venture Banner */
-        .jv-banner { background: var(--gold); padding: 50px 10%; display: flex; justify-content: space-between; align-items: center; color: var(--black); }
-        .jv-content h2 { font-size: 28px; font-weight: 800; }
-        .btn-hotline { padding: 15px 30px; background: var(--black); color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
-
-        /* Why Choose Us Split */
-        .why-us { padding: 80px 10%; display: flex; gap: 50px; align-items: center; }
-        .why-us-text { flex: 1; }
-        .why-us-video { flex: 1; height: 350px; background: #000; border-radius: 8px; position: relative; overflow: hidden; }
-        .why-us-video iframe { width: 100%; height: 100%; border: none; }
-
         /* Landmarks & News */
         .landmarks { padding: 60px 10%; }
         .landmark-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
@@ -101,8 +90,6 @@ module.exports = (properties) => `
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .jv-banner { flex-direction: column; text-align: center; gap: 20px; }
-            .why-us { flex-direction: column; }
             .landmark-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr; }
         }
@@ -157,29 +144,6 @@ module.exports = (properties) => `
                     </div>
                 </div>
             `).join('') : '<p style="text-align:center; width: 100%;">No properties found in the database. Please run the SQL migration.</p>'}
-        </div>
-    </section>
-
-    <section class="jv-banner">
-        <div class="jv-content">
-            <h2>Interested in a Joint Venture?</h2>
-            <p>We are looking for prime land investments in Dhaka and Chittagong.</p>
-        </div>
-        <a href="tel:+880123456789" class="btn-hotline">Contact Hotline</a>
-    </section>
-
-    <section class="why-us">
-        <div class="why-us-text">
-            <h2>Why Choose Us?</h2>
-            <p style="margin-top: 20px; color: var(--text-grey);">With over 50 years of experience, ABC Real Estate has delivered more than 200 successful projects. Our commitment to quality and transparency sets us apart in the competitive real estate market.</p>
-            <ul style="margin-top: 20px; list-style: none;">
-                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> 50+ Years of Excellence</li>
-                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> On-time Project Completion</li>
-                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> Superior Construction Quality</li>
-            </ul>
-        </div>
-        <div class="why-us-video">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Corporate Video"></iframe>
         </div>
     </section>
 
