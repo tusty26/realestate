@@ -40,7 +40,7 @@ Start the Node.js server:
 
 ```bash
 # Port 3000 may require sudo in some Kali environments
-npm start
+sudo npm start
 ```
 
 Your site is now live at: **http://localhost:3000**
