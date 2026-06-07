@@ -6,37 +6,31 @@ const app = express();
 const port = 3000;
 
 /**
- * MySQL Connection Configurations
- * The server will attempt these sequentially until one succeeds.
- * Update the password fields below with your actual MySQL root password.
+ * Kali Linux Optimized Database Configurations
+ * Attempts local connection with no password (default for Kali/MariaDB)
  */
 const dbConfigs = [
-    // Standard Local MySQL (No Password - Common in Dev)
+    // 1. Kali Default: Root access via local loopback with no password
     { host: '127.0.0.1', user: 'root', password: '', database: 'realestate_db' },
     
-    // Standard Local MySQL (With Password 'root' - Common in MAMP/WAMP)
-    { host: '127.0.0.1', user: 'root', password: 'root', database: 'realestate_db' },
-    
-    // Localhost Alias
+    // 2. Kali Default: Root access via localhost alias with no password
     { host: 'localhost', user: 'root', password: '', database: 'realestate_db' },
     
-    // Custom Development User
-    { host: '127.0.0.1', user: 'dev_user', password: 'password', database: 'realestate_db' },
+    // 3. Kali Socket: Direct connection via UNIX socket (extremely reliable on Linux)
+    { socketPath: '/var/run/mysqld/mysqld.sock', user: 'root', password: '', database: 'realestate_db' },
     
-    // UNIX Socket (Linux specific)
-    { socketPath: '/var/run/mysqld/mysqld.sock', user: 'root', password: '', database: 'realestate_db' }
+    // 4. Fallback for 'kali' user with 'kali' password (default Kali credentials)
+    { host: '127.0.0.1', user: 'kali', password: 'kali', database: 'realestate_db' }
 ];
 
 async function getDbConnection() {
     for (const config of dbConfigs) {
         try {
             const connection = await mysql.createConnection(config);
-            // Verify connection is alive
             await connection.ping();
             return connection;
         } catch (err) {
-            // Log connection attempts if needed for debugging
-            // console.log(`Failed connection to ${config.host || 'Socket'}: ${err.message}`);
+            // Silently try the next configuration in the array
         }
     }
     return null;
@@ -48,19 +42,17 @@ app.get('/', async (req, res) => {
     
     if (connection) {
         try {
-            // Fetching active property rows for the 3-column grid
             const [rows] = await connection.execute('SELECT * FROM properties');
             properties = rows;
             await connection.end();
         } catch (err) {
-            console.error('MySQL Query Error:', err.message);
+            console.error('Database Error:', err.message);
         }
     }
     
-    // Serve the UI template with the database results (or empty array)
     res.send(renderPage(properties));
 });
 
 app.listen(port, () => {
-    console.log(`MySQL Server running at http://localhost:${port}`);
+    console.log(`Server running on Kali Linux at http://localhost:${port}`);
 });

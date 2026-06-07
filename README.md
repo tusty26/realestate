@@ -1,71 +1,66 @@
-# ABC Real Estate - MySQL Node.js Application
+# ABC Real Estate - Kali Linux Setup Guide
 
-A clean, standalone Node.js (Express) application for corporate real estate, specifically optimized for **MySQL** backend integration.
+This project is a standalone Node.js (Express) application for corporate real estate, optimized for deployment on **Kali Linux** with a **no-password MariaDB/MySQL** configuration.
 
-## Key Features
-- **Premium UI:** Fully customized Gold (#f8a715) and Black theme.
-- **Dynamic Property Grid:** Fetches listings from MySQL.
-- **Connection Resilience:** Sequential failover logic across multiple MySQL host/credential sets.
+## 1. Install System Dependencies
+Kali Linux requires Node.js and MariaDB to be installed manually. Run the following commands in your terminal:
 
----
-
-## MySQL Setup & Execution
-
-### 1. Install MySQL Server
-Ensure MySQL is installed on your system:
-
-**Linux (Ubuntu/Debian):**
 ```bash
+# Update the package repository
 sudo apt update
-sudo apt install mysql-server
-sudo systemctl start mysql
+
+# Install Node.js, npm, and MariaDB (MySQL)
+sudo apt install -y nodejs npm mariadb-server
 ```
 
-**Windows/Mac:**
-Download and install [MySQL Community Server](https://dev.mysql.com/downloads/mysql/).
-
-### 2. Database Initialization
-Import the schema and sample data into your MySQL instance:
+## 2. Setup the Database
+Start the database service and import the project schema.
 
 ```bash
-# Log in and import the SQL file
-mysql -u root -p < database.sql
+# Start the MariaDB service
+sudo systemctl start mariadb
+
+# Ensure it starts on every boot
+sudo systemctl enable mariadb
+
+# Import the project database (No password required on default Kali)
+sudo mysql < database.sql
 ```
 
-*Note: If you are using MySQL 8.0+ and encounter "Access Denied" or "Auth Plugin" errors, run this in your MySQL shell:*
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_password';
-FLUSH PRIVILEGES;
-```
-
-### 3. Application Setup
-Navigate to the directory and install Node dependencies:
+## 3. Install Project Dependencies
+Navigate to the project folder and install the required Node.js modules:
 
 ```bash
+# Install express and mysql2
 npm install
 ```
 
-### 4. Configuration
-Open `server.js` and update the `dbConfigs` array if your MySQL password is not empty:
-```javascript
-{ host: '127.0.0.1', user: 'root', password: 'YOUR_PASSWORD', database: 'realestate_db' }
-```
+## 4. Run the Application
+Start the server:
 
-### 5. Start Application
 ```bash
+# Use sudo if you encounter permission issues on port 3000
 npm start
 ```
-Access the site at: **http://localhost:3000**
+
+Access the website at: **http://localhost:3000**
 
 ---
 
-## Technical Stack
-- **Backend:** Node.js, Express.js
-- **Database:** MySQL (using `mysql2` high-performance driver)
-- **Frontend:** Responsive HTML5, Custom CSS3 (internal)
+## Configuration Details
+- **Environment:** Kali Linux
+- **Node.js:** Server-side runtime (Required)
+- **Database:** MariaDB (MySQL Protocol)
+- **Authentication:** Configured for `root` user with **no password** (Default Kali setup).
 
-## Folder Structure
-- `server.js`: MySQL routing and failover logic.
-- `views/homepage.js`: Separated UI source markup.
-- `database.sql`: MySQL table structure and 4 sample premium listings.
-- `package.json`: Dependencies (`express`, `mysql2`).
+## Project Structure
+- `server.js`: Express server with optimized Kali connection logic.
+- `views/homepage.js`: Separated frontend UI markup.
+- `database.sql`: SQL schema and premium sample listings.
+- `package.json`: Project metadata and dependencies.
+
+## Troubleshooting
+If you cannot connect to the database:
+1. Ensure the service is running: `sudo systemctl status mariadb`
+2. Try logging in manually: `sudo mysql -u root`
+3. If you have set a custom password, update the `dbConfigs` array in `server.js`.
