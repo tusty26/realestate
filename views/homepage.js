@@ -1,0 +1,224 @@
+module.exports = (properties) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Real Estate | Constructing Since 1972</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #f8a715;
+            --black: #000000;
+            --dark-grey: #1a1a1a;
+            --slate-footer: #222222;
+            --light-grey: #f4f4f4;
+            --text-grey: #666666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fff; color: var(--black); line-height: 1.6; }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo { font-size: 24px; font-weight: bold; color: var(--black); }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--black); font-weight: 600; font-size: 14px; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* Hero Banner */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+        .hero-content h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 2px; }
+        .hero-content p { font-size: 18px; margin-top: 10px; font-weight: 300; }
+
+        /* About Section */
+        .about { padding: 80px 10%; text-align: center; }
+        .about h2 { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
+        .about h3 { color: var(--gold); font-size: 14px; letter-spacing: 3px; margin-bottom: 30px; }
+        .vision-box { max-width: 800px; margin: 0 auto; padding: 40px; border-left: 5px solid var(--gold); background: var(--light-grey); font-size: 18px; font-style: italic; }
+
+        /* Property Grid */
+        .properties-section { padding: 60px 10%; background: var(--light-grey); }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: #fff; border-radius: 4px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-10px); }
+        .card-img { height: 250px; width: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 15px; left: 15px; background: var(--gold); color: #fff; padding: 5px 12px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .card-body { padding: 25px; }
+        .card-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--black); }
+        .card-text { font-size: 14px; color: var(--text-grey); margin-bottom: 20px; }
+        .meta { display: flex; justify-content: space-between; border-top: 1px solid #eee; padding-top: 15px; margin-bottom: 20px; font-size: 13px; color: var(--text-grey); }
+        .meta i { color: var(--gold); margin-right: 5px; }
+        .btn-details { display: block; width: 100%; padding: 12px; background: var(--gold); color: #fff; text-align: center; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .btn-details:hover { background: var(--black); }
+
+        /* Joint-Venture Banner */
+        .jv-banner { background: var(--gold); padding: 50px 10%; display: flex; justify-content: space-between; align-items: center; color: var(--black); }
+        .jv-content h2 { font-size: 28px; font-weight: 800; }
+        .btn-hotline { padding: 15px 30px; background: var(--black); color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
+
+        /* Why Choose Us Split */
+        .why-us { padding: 80px 10%; display: flex; gap: 50px; align-items: center; }
+        .why-us-text { flex: 1; }
+        .why-us-video { flex: 1; height: 350px; background: #000; border-radius: 8px; position: relative; overflow: hidden; }
+        .why-us-video iframe { width: 100%; height: 100%; border: none; }
+
+        /* Landmarks & News */
+        .landmarks { padding: 60px 10%; }
+        .landmark-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .landmark-item { height: 200px; background-size: cover; background-position: center; border-radius: 4px; }
+
+        /* Footer */
+        footer { background: var(--slate-footer); color: #fff; padding: 60px 10% 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; margin-bottom: 40px; }
+        .footer-about p { color: #aaa; margin-top: 20px; max-width: 400px; }
+        .footer-contact h4 { margin-bottom: 20px; color: var(--gold); }
+        .footer-contact p { margin-bottom: 10px; color: #aaa; }
+        .footer-bottom { border-top: 1px solid #444; padding-top: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #888; }
+        .social-icons a { color: #fff; margin-left: 15px; font-size: 18px; transition: 0.3s; }
+        .social-icons a:hover { color: var(--gold); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .jv-banner { flex-direction: column; text-align: center; gap: 20px; }
+            .why-us { flex-direction: column; }
+            .landmark-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ABC REAL ESTATE</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Excellence in Construction</h1>
+            <p>Building Landmarks Since 1972</p>
+        </div>
+    </header>
+
+    <section class="about">
+        <h2>ABC REAL ESTATE</h2>
+        <h3>CONSTRUCTING SINCE 1972</h3>
+        <div class="vision-box">
+            "To be the leader in the real estate industry by providing enhanced services, relationship and profitability through quality and innovation."
+        </div>
+    </section>
+
+    <section class="properties-section">
+        <div class="section-header">
+            <h2>Our Featured Projects</h2>
+            <p>Discover our range of premium properties designed for your lifestyle.</p>
+        </div>
+        <div class="grid">
+            ${properties.length > 0 ? properties.map(p => `
+                <div class="card">
+                    ${p.is_featured ? '<div class="badge">Featured</div>' : ''}
+                    <img src="${p.image_url}" alt="${p.title}" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">${p.title}</h3>
+                        <p class="card-text">${p.description}</p>
+                        <div class="meta">
+                            <span><i class="fas fa-bed"></i> ${p.rooms} Beds</span>
+                            <span><i class="fas fa-bath"></i> ${p.baths} Baths</span>
+                            <span><i class="fas fa-expand"></i> ${p.size} Sqft</span>
+                        </div>
+                        <a href="#" class="btn-details">Details</a>
+                    </div>
+                </div>
+            `).join('') : '<p style="text-align:center; width: 100%;">No properties found in the database. Please run the SQL migration.</p>'}
+        </div>
+    </section>
+
+    <section class="jv-banner">
+        <div class="jv-content">
+            <h2>Interested in a Joint Venture?</h2>
+            <p>We are looking for prime land investments in Dhaka and Chittagong.</p>
+        </div>
+        <a href="tel:+880123456789" class="btn-hotline">Contact Hotline</a>
+    </section>
+
+    <section class="why-us">
+        <div class="why-us-text">
+            <h2>Why Choose Us?</h2>
+            <p style="margin-top: 20px; color: var(--text-grey);">With over 50 years of experience, ABC Real Estate has delivered more than 200 successful projects. Our commitment to quality and transparency sets us apart in the competitive real estate market.</p>
+            <ul style="margin-top: 20px; list-style: none;">
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> 50+ Years of Excellence</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> On-time Project Completion</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--gold); margin-right: 10px;"></i> Superior Construction Quality</li>
+            </ul>
+        </div>
+        <div class="why-us-video">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Corporate Video"></iframe>
+        </div>
+    </section>
+
+    <section class="landmarks">
+        <div class="section-header">
+            <h2>Our Landmarks</h2>
+        </div>
+        <div class="landmark-grid">
+            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1475855581690-80accde3ae2b?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=400&q=80');"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-about">
+                <div class="logo" style="color: #fff;">ABC REAL ESTATE</div>
+                <p>Leading the way in premium residential and commercial developments across Bangladesh. Quality and integrity are our core pillars.</p>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--gold);"></i> 123 Corporate Road, Gulshan, Dhaka</p>
+                <p><i class="fas fa-phone" style="margin-right: 10px; color: var(--gold);"></i> +880 123 456 7890</p>
+                <p><i class="fas fa-envelope" style="margin-right: 10px; color: var(--gold);"></i> info@abcrealestate.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ABC Real Estate. All Rights Reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+`;

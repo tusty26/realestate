@@ -1,61 +1,92 @@
-# CSE 414: Real Estate Management Portal (Lab Project)
+# ABC Real Estate - Node.js Conversion
 
-This project provides a comparative demonstration of common web vulnerabilities (SQL Injection and Reflected XSS) and their respective mitigations.
+This project is a standalone Node.js (Express) conversion of a corporate real estate landing page. It features a premium UI, a resilient MariaDB/MySQL backend connection logic, and dynamic property listings.
 
-## Lab Setup Instructions (Linux / Ubuntu)
-
-Follow these steps on the university lab PC after cloning the repository.
-
-### 1. Move Project to Web Server Directory
-Copy the project files to the default Apache directory:
-```bash
-sudo cp -r * /var/www/html/
-```
-
-### 2. Set Permissions
-Ensure the Apache user (`www-data`) can read and execute the files:
-```bash
-sudo chown -R www-data:www-data /var/www/html/
-sudo chmod -R 755 /var/www/html/
-```
-
-### 3. Start Services
-Ensure the Apache2 and MySQL (MariaDB) services are running:
-```bash
-sudo systemctl start apache2
-sudo systemctl start mysql
-```
-
-### 4. Database Setup
-Import the database schema and sample data. (Note: You may need to provide the MySQL root password if set).
-```bash
-sudo mysql -u root < /var/www/html/database.sql
-```
+## Features
+- **Modern UI:** Gold and Black corporate theme with responsive grids.
+- **Resilient Backend:** Sequential database connection attempts with silent failover to preserve UI uptime.
+- **Dynamic Data:** Property listings fetched directly from MariaDB/MySQL.
 
 ---
 
-## Demonstration Guide
+## Linux Setup & Execution
 
-### A. Vulnerable Version (`index.php`)
-Open `http://localhost/index.php` in your browser.
+Follow these steps to set up and run the project on a Linux environment (Ubuntu/Debian/Kali/CentOS).
 
-1.  **Reflected XSS Exploit:**
-    In the search box, enter the following payload:
-    `<script>alert('XSS Vulnerability Found!');</script>`
-    *Observation:* The script executes because the input is directly echoed.
+### 1. Install Prerequisites
+Ensure you have Node.js and MariaDB (or MySQL) installed:
 
-2.  **SQL Injection (SQLi) Exploit:**
-    In the search box, enter the following payload:
-    `' OR '1'='1`
-    *Observation:* The query becomes `SELECT * FROM properties WHERE title LIKE '%' OR '1'='1'%'`, which bypasses the filter and returns all rows in the database.
+```bash
+# Update package list
+sudo apt update
 
-### B. Secure Version (`secure.php`)
-Open `http://localhost/secure.php` in your browser.
+# Install Node.js and npm
+sudo apt install -y nodejs npm
 
-1.  **XSS Mitigation:**
-    Try the same `<script>` payload.
-    *Observation:* The script is displayed as plain text because of `htmlspecialchars()`.
+# Install MariaDB Server
+sudo apt install -y mariadb-server
+```
 
-2.  **SQLi Mitigation:**
-    Try the `' OR '1'='1` payload.
-    *Observation:* The application searches for the literal string instead of executing it as code, thanks to **PDO Prepared Statements**.
+### 2. Database Configuration
+Start the MariaDB service and secure it:
+
+```bash
+# Start service
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+# Optional: Run security script
+# sudo mysql_secure_installation
+```
+
+### 3. Import SQL Schema
+Import the provided `database.sql` to create the database and sample listings. 
+
+**Option A: Using the CLI (Recommended)**
+```bash
+# Log in as root and import
+sudo mysql -u root < database.sql
+```
+
+**Option B: Manual Login**
+```bash
+sudo mysql -u root
+# Inside the MariaDB shell:
+source database.sql;
+exit;
+```
+
+*Note: The application is configured to try connecting as `root` with no password, as well as the user `kali` with password `kali`.*
+
+### 4. Application Installation
+Navigate to the project directory and install dependencies:
+
+```bash
+# Install Express and MySQL2
+npm install
+```
+
+### 5. Start the Server
+Run the application using the start script:
+
+```bash
+npm start
+```
+
+The server will be available at: **http://localhost:3000**
+
+---
+
+## Project Structure
+- `server.js`: Core Express server and database connection logic.
+- `views/homepage.js`: Frontend HTML/CSS source markup.
+- `database.sql`: SQL schema and sample property data.
+- `package.json`: Project dependencies and metadata.
+
+## Database Failover Logic
+If the database is unreachable or credentials fail, the server will:
+1. Attempt `127.0.0.1` (root).
+2. Attempt `localhost` (root).
+3. Attempt `kali:kali` credentials.
+4. Attempt UNIX socket pipe (`/var/run/mysqld/mysqld.sock`).
+5. **Seamless Failover:** Serve the UI with a "No properties found" message instead of crashing.

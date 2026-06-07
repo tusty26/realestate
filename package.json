@@ -1,0 +1,13 @@
+{
+  "name": "tusty26-realestate",
+  "version": "1.0.0",
+  "description": "Corporate real estate project conversion from WordPress to Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0"
+  }
+}
