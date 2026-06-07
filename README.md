@@ -1,92 +1,71 @@
-# ABC Real Estate - Node.js Conversion
+# ABC Real Estate - MySQL Node.js Application
 
-This project is a standalone Node.js (Express) conversion of a corporate real estate landing page. It features a premium UI, a resilient MariaDB/MySQL backend connection logic, and dynamic property listings.
+A clean, standalone Node.js (Express) application for corporate real estate, specifically optimized for **MySQL** backend integration.
 
-## Features
-- **Modern UI:** Gold and Black corporate theme with responsive grids.
-- **Resilient Backend:** Sequential database connection attempts with silent failover to preserve UI uptime.
-- **Dynamic Data:** Property listings fetched directly from MariaDB/MySQL.
+## Key Features
+- **Premium UI:** Fully customized Gold (#f8a715) and Black theme.
+- **Dynamic Property Grid:** Fetches listings from MySQL.
+- **Connection Resilience:** Sequential failover logic across multiple MySQL host/credential sets.
 
 ---
 
-## Linux Setup & Execution
+## MySQL Setup & Execution
 
-Follow these steps to set up and run the project on a Linux environment (Ubuntu/Debian/Kali/CentOS).
+### 1. Install MySQL Server
+Ensure MySQL is installed on your system:
 
-### 1. Install Prerequisites
-Ensure you have Node.js and MariaDB (or MySQL) installed:
-
+**Linux (Ubuntu/Debian):**
 ```bash
-# Update package list
 sudo apt update
-
-# Install Node.js and npm
-sudo apt install -y nodejs npm
-
-# Install MariaDB Server
-sudo apt install -y mariadb-server
+sudo apt install mysql-server
+sudo systemctl start mysql
 ```
 
-### 2. Database Configuration
-Start the MariaDB service and secure it:
+**Windows/Mac:**
+Download and install [MySQL Community Server](https://dev.mysql.com/downloads/mysql/).
+
+### 2. Database Initialization
+Import the schema and sample data into your MySQL instance:
 
 ```bash
-# Start service
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
-
-# Optional: Run security script
-# sudo mysql_secure_installation
+# Log in and import the SQL file
+mysql -u root -p < database.sql
 ```
 
-### 3. Import SQL Schema
-Import the provided `database.sql` to create the database and sample listings. 
-
-**Option A: Using the CLI (Recommended)**
-```bash
-# Log in as root and import
-sudo mysql -u root < database.sql
+*Note: If you are using MySQL 8.0+ and encounter "Access Denied" or "Auth Plugin" errors, run this in your MySQL shell:*
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_password';
+FLUSH PRIVILEGES;
 ```
 
-**Option B: Manual Login**
-```bash
-sudo mysql -u root
-# Inside the MariaDB shell:
-source database.sql;
-exit;
-```
-
-*Note: The application is configured to try connecting as `root` with no password, as well as the user `kali` with password `kali`.*
-
-### 4. Application Installation
-Navigate to the project directory and install dependencies:
+### 3. Application Setup
+Navigate to the directory and install Node dependencies:
 
 ```bash
-# Install Express and MySQL2
 npm install
 ```
 
-### 5. Start the Server
-Run the application using the start script:
+### 4. Configuration
+Open `server.js` and update the `dbConfigs` array if your MySQL password is not empty:
+```javascript
+{ host: '127.0.0.1', user: 'root', password: 'YOUR_PASSWORD', database: 'realestate_db' }
+```
 
+### 5. Start Application
 ```bash
 npm start
 ```
-
-The server will be available at: **http://localhost:3000**
+Access the site at: **http://localhost:3000**
 
 ---
 
-## Project Structure
-- `server.js`: Core Express server and database connection logic.
-- `views/homepage.js`: Frontend HTML/CSS source markup.
-- `database.sql`: SQL schema and sample property data.
-- `package.json`: Project dependencies and metadata.
+## Technical Stack
+- **Backend:** Node.js, Express.js
+- **Database:** MySQL (using `mysql2` high-performance driver)
+- **Frontend:** Responsive HTML5, Custom CSS3 (internal)
 
-## Database Failover Logic
-If the database is unreachable or credentials fail, the server will:
-1. Attempt `127.0.0.1` (root).
-2. Attempt `localhost` (root).
-3. Attempt `kali:kali` credentials.
-4. Attempt UNIX socket pipe (`/var/run/mysqld/mysqld.sock`).
-5. **Seamless Failover:** Serve the UI with a "No properties found" message instead of crashing.
+## Folder Structure
+- `server.js`: MySQL routing and failover logic.
+- `views/homepage.js`: Separated UI source markup.
+- `database.sql`: MySQL table structure and 4 sample premium listings.
+- `package.json`: Dependencies (`express`, `mysql2`).
