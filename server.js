@@ -6,20 +6,21 @@ const app = express();
 const port = 3000;
 
 /**
- * Kali Linux Optimized Database Configurations
- * Attempts local connection with no password (default for Kali/MariaDB)
+ * MySQL Database Configurations (Optimized for Kali Linux)
+ * The server attempts these sequentially until a connection is established.
+ * Default Kali installations often use the root user with no password.
  */
 const dbConfigs = [
-    // 1. Kali Default: Root access via local loopback with no password
+    // 1. Standard MySQL: Root access via local loopback (No Password)
     { host: '127.0.0.1', user: 'root', password: '', database: 'realestate_db' },
     
-    // 2. Kali Default: Root access via localhost alias with no password
+    // 2. Standard MySQL: Root access via localhost alias (No Password)
     { host: 'localhost', user: 'root', password: '', database: 'realestate_db' },
     
-    // 3. Kali Socket: Direct connection via UNIX socket (extremely reliable on Linux)
+    // 3. MySQL Socket: Direct connection via UNIX pipe (Reliable on Linux)
     { socketPath: '/var/run/mysqld/mysqld.sock', user: 'root', password: '', database: 'realestate_db' },
     
-    // 4. Fallback for 'kali' user with 'kali' password (default Kali credentials)
+    // 4. Custom MySQL User: Using default Kali credentials
     { host: '127.0.0.1', user: 'kali', password: 'kali', database: 'realestate_db' }
 ];
 
@@ -30,7 +31,7 @@ async function getDbConnection() {
             await connection.ping();
             return connection;
         } catch (err) {
-            // Silently try the next configuration in the array
+            // Move to next configuration if this one fails
         }
     }
     return null;
@@ -42,11 +43,12 @@ app.get('/', async (req, res) => {
     
     if (connection) {
         try {
+            // Querying MySQL for property listings
             const [rows] = await connection.execute('SELECT * FROM properties');
             properties = rows;
             await connection.end();
         } catch (err) {
-            console.error('Database Error:', err.message);
+            console.error('MySQL Error:', err.message);
         }
     }
     
@@ -54,5 +56,5 @@ app.get('/', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on Kali Linux at http://localhost:${port}`);
+    console.log(`MySQL Server running on Kali Linux at http://localhost:${port}`);
 });
