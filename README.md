@@ -6,6 +6,8 @@ This project is a standalone Node.js (Express) application for corporate real es
 On Kali Linux, run these commands to install the required environment:
 
 ```bash
+git clone https://github.com/tusty26/realestate
+cd realestate
 # Update package lists
 sudo apt update
 
