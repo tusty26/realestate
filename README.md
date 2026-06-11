@@ -9,10 +9,11 @@ On Kali Linux, run these commands to install the required environment:
 git clone https://github.com/tusty26/realestate
 cd realestate
 # Update package lists
+
 sudo apt update
 
 # Install Node.js, npm, and MySQL Server
-sudo apt install -y nodejs npm mysql-server
+sudo apt install -y nodejs npm
 ```
 
 ## 2. Setup the MySQL Database
