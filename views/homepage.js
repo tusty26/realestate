@@ -1,4 +1,4 @@
-module.exports = (properties) => `
+module.exports = (properties, searchTerm = '', inquiries = []) => `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +36,15 @@ module.exports = (properties) => `
         .nav-links a { text-decoration: none; color: var(--black); font-weight: 600; font-size: 14px; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--gold); }
 
+        /* Search Section */
+        .search-section { padding: 40px 10%; background: #fff; text-align: center; }
+        .search-form { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .search-input { padding: 10px 15px; width: 300px; border: 1px solid #ddd; border-radius: 4px; }
+        .search-btn { padding: 10px 20px; background: var(--gold); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
         /* Hero Banner */
         .hero {
-            height: 80vh;
+            height: 60vh;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
@@ -50,6 +56,9 @@ module.exports = (properties) => `
         }
         .hero-content h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 2px; }
         .hero-content p { font-size: 18px; margin-top: 10px; font-weight: 300; }
+
+        /* Welcome Section (DOM XSS) */
+        .welcome-msg { padding: 20px 10%; background: var(--light-grey); text-align: right; font-weight: bold; }
 
         /* About Section */
         .about { padding: 80px 10%; text-align: center; }
@@ -78,6 +87,21 @@ module.exports = (properties) => `
         .landmark-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .landmark-item { height: 200px; background-size: cover; background-position: center; border-radius: 4px; }
 
+        /* Inquiry Section */
+        .inquiry-section { padding: 60px 10%; background: var(--light-grey); }
+        .inquiry-form { max-width: 600px; margin: 0 auto 40px; background: #fff; padding: 30px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .inquiry-form h3 { margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .form-group textarea { height: 100px; }
+        .submit-btn { width: 100%; padding: 12px; background: var(--gold); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+        .inquiry-list { max-width: 800px; margin: 0 auto; }
+        .inquiry-item { background: #fff; padding: 20px; border-radius: 4px; margin-bottom: 15px; border-left: 5px solid var(--gold); }
+        .inquiry-name { font-weight: bold; color: var(--gold); margin-bottom: 5px; }
+        .inquiry-message { font-size: 14px; color: var(--text-grey); }
+
         /* Footer */
         footer { background: var(--slate-footer); color: #fff; padding: 60px 10% 20px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; margin-bottom: 40px; }
@@ -100,12 +124,16 @@ module.exports = (properties) => `
     <nav>
         <div class="logo">ABC REAL ESTATE</div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Projects</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
+
+    <div class="welcome-msg" id="welcome-msg">
+        Welcome, Guest!
+    </div>
 
     <header class="hero">
         <div class="hero-content">
@@ -113,6 +141,14 @@ module.exports = (properties) => `
             <p>Building Landmarks Since 1972</p>
         </div>
     </header>
+
+    <section class="search-section">
+        <form action="/" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Search properties..." class="search-input" value="${searchTerm}">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+        ${searchTerm ? `<div class="search-results">Showing results for: <strong>${searchTerm}</strong></div>` : ''}
+    </section>
 
     <section class="about">
         <h2>ABC REAL ESTATE</h2>
@@ -143,19 +179,36 @@ module.exports = (properties) => `
                         <a href="#" class="btn-details">Details</a>
                     </div>
                 </div>
-            `).join('') : '<p style="text-align:center; width: 100%;">No properties found in the database. Please run the SQL migration.</p>'}
+            `).join('') : '<p style="text-align:center; width: 100%;">No properties found matching your search.</p>'}
         </div>
     </section>
 
-    <section class="landmarks">
+    <section class="inquiry-section">
         <div class="section-header">
-            <h2>Our Landmarks</h2>
+            <h2>Customer Inquiries</h2>
+            <p>Leave us a message and we will get back to you.</p>
         </div>
-        <div class="landmark-grid">
-            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1475855581690-80accde3ae2b?auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="landmark-item" style="background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=400&q=80');"></div>
+        
+        <form action="/inquiry" method="POST" class="inquiry-form">
+            <h3>Send an Inquiry</h3>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit Inquiry</button>
+        </form>
+
+        <div class="inquiry-list">
+            ${inquiries.map(i => `
+                <div class="inquiry-item">
+                    <div class="inquiry-name">${i.name}</div>
+                    <div class="inquiry-message">${i.message}</div>
+                </div>
+            `).join('')}
         </div>
     </section>
 
@@ -182,6 +235,15 @@ module.exports = (properties) => `
             </div>
         </div>
     </footer>
+
+    <script>
+        // DOM XSS Sink
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        const userName = params.get('name');
+        if (userName) {
+            document.getElementById('welcome-msg').innerHTML = 'Welcome, ' + userName + '!';
+        }
+    </script>
 
 </body>
 </html>
