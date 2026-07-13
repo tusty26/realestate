@@ -25,3 +25,13 @@ INSERT INTO inquiries (name, message) VALUES
 ('John Doe', 'I am interested in the Oasis property.'),
 ('Jane Smith', 'Do you have any properties in Uttara?');
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL
+);
+
+INSERT INTO users (username, password, role) VALUES
+('admin', 'admin_password_2026', 'admin');
+
