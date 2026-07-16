@@ -1,7 +1,15 @@
 CREATE DATABASE IF NOT EXISTS realestate_db;
 USE realestate_db;
 
-CREATE TABLE IF NOT EXISTS properties (
+DROP TABLE IF EXISTS agent_requests;
+DROP TABLE IF EXISTS admin_notes;
+DROP TABLE IF EXISTS sales_transactions;
+DROP TABLE IF EXISTS agents;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS inquiries;
+DROP TABLE IF EXISTS properties;
+
+CREATE TABLE properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -14,6 +22,7 @@ CREATE TABLE IF NOT EXISTS properties (
     is_featured BOOLEAN DEFAULT FALSE,
     assigned_agent_id INT DEFAULT NULL
 );
+
 
 INSERT INTO properties (title, location, description, price, rooms, baths, size, image_url, is_featured, assigned_agent_id) VALUES
 ('The Oasis Apartments', 'Gulshan, Dhaka', 'Luxury living space with panoramic views of Gulshan lake and state-of-the-art facilities.', '$750,000', 4, 4, 3200, 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80', TRUE, 1),
