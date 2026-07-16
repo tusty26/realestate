@@ -292,6 +292,7 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
                 <input type="text" name="name" placeholder="Search Agent Name (e.g., Sarah Jenkins)" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 4px;" required>
                 <button type="submit" class="submit-btn" style="background: var(--black);">Lookup Agent</button>
             </form>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;"><i class="fas fa-info-circle" style="color: var(--primary-gold); margin-right: 5px;"></i> Active Brokers: <strong>Sarah Jenkins</strong>, <strong>Michael Chang</strong>, <strong>Rahat Kabir</strong></div>
         </div>
 
         <!-- Deal Ledger Search -->
@@ -302,8 +303,8 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
                 <input type="text" name="search" placeholder="Filter by event (e.g., LOGIN, VIEW)" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 4px;" required>
                 <button type="submit" class="submit-btn">Filter Logs</button>
             </form>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;"><i class="fas fa-info-circle" style="color: var(--primary-gold); margin-right: 5px;"></i> Event Types: <strong>LOGIN</strong>, <strong>VIEW</strong>, <strong>PURCHASE</strong>, <strong>APPROVE</strong></div>
         </div>
-
 
         <!-- Listing Registry Inspector -->
         <div class="panel">
@@ -314,6 +315,7 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
                 <button onclick="testBooleanSqli()" class="submit-btn" style="background: var(--dark-grey);">Inspect Listing</button>
                 <div id="booleanResult" style="font-size: 13px; font-weight: bold; min-height: 20px; text-align: center; border-radius: 4px; padding: 5px;"></div>
             </div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;"><i class="fas fa-info-circle" style="color: var(--primary-gold); margin-right: 5px;"></i> Registered: <strong>The Oasis Apartments</strong>, <strong>Skyline Heights</strong>, <strong>Rosewood Court</strong></div>
         </div>
 
         <!-- Property Valuation Calculator -->
@@ -325,7 +327,9 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
                 <button onclick="testTimeSqli()" class="submit-btn" style="background: var(--danger-red);">Ping Diagnostic Probe</button>
                 <div id="timeResult" style="font-size: 13px; text-align: center; color: var(--text-grey); padding: 5px;"></div>
             </div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;"><i class="fas fa-info-circle" style="color: var(--primary-gold); margin-right: 5px;"></i> Active IDs: <strong>1</strong>, <strong>2</strong>, <strong>3</strong>, <strong>5</strong>, <strong>6</strong></div>
         </div>
+
 
         <!-- Marketing Department: Reflected XSS Preview Banner -->
         <div class="panel" style="grid-column: span 2;">
