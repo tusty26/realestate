@@ -5,11 +5,14 @@ const publicController = require('./controllers/publicController');
 const authController = require('./controllers/authController');
 const propertyController = require('./controllers/propertyController');
 const agentController = require('./controllers/agentController');
-const auditController = require('./controllers/auditController');
+const transactionController = require('./controllers/transactionController');
 const propertyCheckController = require('./controllers/propertyCheckController');
 const healthController = require('./controllers/healthController');
 const dashboardController = require('./controllers/dashboardController');
 const previewController = require('./controllers/previewController');
+const employeeController = require('./controllers/employeeController');
+
+
 
 const app = express();
 const port = 3000;
@@ -55,9 +58,13 @@ app.post('/admin/save-note', dashboardController.handlePostSaveNote);
 app.get('/admin/welcome-preview', previewController.handleWelcomePreview);
 
 // ----------------------------------------------------
-// SQLi Deletion & CSRF Feature
+// Property CRUD Feature
 // ----------------------------------------------------
 app.get('/admin/delete-property', propertyController.handleDeleteProperty);
+app.post('/admin/add-property', propertyController.handlePostAddProperty);
+app.get('/admin/edit-property', propertyController.handleGetEditProperty);
+app.post('/admin/edit-property', propertyController.handlePostEditProperty);
+
 
 // ----------------------------------------------------
 // Error-Based SQLi Agent Lookup Feature
@@ -65,9 +72,10 @@ app.get('/admin/delete-property', propertyController.handleDeleteProperty);
 app.get('/admin/agent-lookup', agentController.handleAgentLookup);
 
 // ----------------------------------------------------
-// Union-Based SQLi Audit Logs Feature
+// Union-Based SQLi Transactions Ledger Feature
 // ----------------------------------------------------
-app.get('/admin/audit-logs', auditController.handleAuditLogs);
+app.get('/admin/transaction-ledger', transactionController.handleTransactionSearch);
+
 
 // ----------------------------------------------------
 // Boolean-Blind SQLi Property Check API Feature
@@ -79,6 +87,16 @@ app.get('/api/property-check', propertyCheckController.handlePropertyCheck);
 // ----------------------------------------------------
 app.get('/api/system-health', healthController.handleSystemHealth);
 
+// ----------------------------------------------------
+// Broker Portal Routes
+// ----------------------------------------------------
+app.get('/employee/login', employeeController.handleGetLogin);
+app.post('/employee/login', employeeController.handlePostLogin);
+app.get('/employee/dashboard', employeeController.handleGetDashboard);
+app.post('/employee/submit-request', employeeController.handlePostSubmitRequest);
+app.get('/employee/logout', employeeController.handleLogout);
+
 app.listen(port, () => {
     console.log(`MySQL Server running on Kali Linux at http://localhost:${port}`);
 });
+

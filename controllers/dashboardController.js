@@ -16,6 +16,7 @@ async function handleGetDashboard(req, res) {
     let properties = [];
     let inquiries = [];
     let adminNotes = [];
+    let agentRequests = [];
 
     if (connection) {
         try {
@@ -28,6 +29,9 @@ async function handleGetDashboard(req, res) {
             const [notesRows] = await connection.execute('SELECT * FROM admin_notes ORDER BY created_at DESC');
             adminNotes = notesRows;
 
+            const [reqRows] = await connection.execute('SELECT * FROM agent_requests ORDER BY created_at DESC');
+            agentRequests = reqRows;
+
             await connection.end();
         } catch (err) {
             console.error('Database Error:', err.message);
@@ -35,7 +39,8 @@ async function handleGetDashboard(req, res) {
     }
 
     // VULNERABILITY SINK: Renders output rows directly in templates unescaped
-    res.send(renderAdminDashboard(properties, inquiries, { username: sessionUser }, adminNotes));
+    res.send(renderAdminDashboard(properties, inquiries, { username: sessionUser }, adminNotes, agentRequests));
+
 }
 
 async function handlePostSaveNote(req, res) {

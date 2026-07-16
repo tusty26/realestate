@@ -125,12 +125,11 @@ module.exports = (properties, searchTerm = '', inquiries = []) => `
         <div class="logo">ABC REAL ESTATE</div>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/employee/login" style="background: var(--black); padding: 5px 12px; color: #fff; border-radius: 4px; font-weight: bold; margin-right: 5px;">Broker Login</a></li>
             <li><a href="/admin/login" style="background: var(--gold); padding: 5px 12px; color: #fff; border-radius: 4px; font-weight: bold;">Admin Login</a></li>
         </ul>
     </nav>
+
 
 
     <div class="welcome-msg" id="welcome-msg">
