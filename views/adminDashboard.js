@@ -6,48 +6,72 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC Real Estate | Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #f8a715;
-            --black: #000000;
-            --dark-grey: #1a1a1a;
-            --slate-footer: #222222;
-            --light-grey: #f4f4f4;
-            --text-grey: #666666;
-            --danger-red: #d9534f;
+            --black: #0c0c0e;
+            --dark-grey: #1a1a22;
+            --slate-footer: #15151a;
+            --light-grey: #f8f9fc;
+            --text-grey: #718096;
+            --danger-red: #e53e3e;
+            --border-color: #edf2f7;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #fff; color: var(--black); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--light-grey); color: var(--black); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
 
         /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 10%;
+            padding: 15px 10%;
             background: #fff;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-bottom: 1px solid var(--border-color);
         }
-        .logo { font-size: 24px; font-weight: bold; color: var(--black); }
-        .nav-links { list-style: none; display: flex; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--black); font-weight: 600; font-size: 14px; text-transform: uppercase; transition: 0.3s; }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: 0.5px; }
+        .logo span { color: var(--gold); }
+        .nav-links { list-style: none; display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--black); font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 15px; transition: 0.3s; }
         .nav-links a:hover { color: var(--gold); }
-        .user-badge { background: var(--gold); color: #fff; padding: 5px 12px; border-radius: 4px; font-size: 13px; font-weight: bold; }
-        .logout-btn { background: var(--black); color: #fff !important; padding: 8px 16px; border-radius: 4px; }
-        .logout-btn:hover { background: var(--gold) !important; color: #fff !important; }
+        
+        .user-badge { 
+            background: #f7fafc; 
+            color: var(--dark-grey); 
+            border: 1px solid var(--border-color);
+            padding: 6px 14px; 
+            border-radius: 999px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logout-btn { 
+            background: var(--black); 
+            color: #fff !important; 
+            padding: 8px 18px; 
+            border-radius: 8px; 
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .logout-btn:hover { background: var(--gold) !important; transform: translateY(-1px); }
 
         /* Banner */
         .dashboard-header {
             background: var(--black);
             color: #fff;
-            padding: 40px 10%;
+            padding: 50px 10%;
             border-bottom: 4px solid var(--gold);
         }
-        .dashboard-header h1 { font-size: 32px; text-transform: uppercase; letter-spacing: 1px; }
+        .dashboard-header h1 { font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: 0.5px; }
         .dashboard-header p { color: var(--text-grey); font-size: 15px; margin-top: 5px; }
 
         /* Main Container */
@@ -55,100 +79,174 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
             padding: 50px 10%;
             flex: 1;
             display: grid;
-            grid-template-columns: 3fr 2fr;
+            grid-template-columns: 1fr;
             gap: 40px;
         }
 
         /* Inventory Panel */
         .panel {
             background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+        .panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
         }
         .panel h2 {
-            font-size: 22px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
+            color: var(--dark-grey);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .panel h2 span { font-size: 14px; color: var(--text-grey); text-transform: none; }
+        .panel h2 span { font-size: 14px; color: var(--text-grey); font-family: 'Inter', sans-serif; font-weight: 500; }
+
+        /* Form styling */
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            color: var(--black);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(248, 167, 21, 0.15);
+        }
+
+        /* Buttons */
+        .submit-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--black);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-block;
+        }
+        .submit-btn:hover {
+            background: var(--gold);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(248, 167, 21, 0.2);
+        }
+        .submit-btn-gold {
+            background: var(--gold);
+        }
+        .submit-btn-gold:hover {
+            background: var(--black);
+        }
 
         /* Inventory Table */
         .inventory-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             text-align: left;
         }
         .inventory-table th, .inventory-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
         }
         .inventory-table th {
-            background-color: var(--light-grey);
-            font-weight: bold;
+            background-color: #f7fafc;
+            color: var(--text-grey);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
             text-transform: uppercase;
-            font-size: 13px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #edf2f7;
         }
         .inventory-table td {
             font-size: 14px;
+            color: var(--dark-grey);
         }
+        .inventory-table tr:last-child td {
+            border-bottom: none;
+        }
+        .inventory-table tr:hover td {
+            background-color: #fafbfc;
+        }
+
         .action-delete-btn {
             background: var(--danger-red);
             color: #fff;
             border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
             text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            transition: 0.3s;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: inline-block;
         }
         .action-delete-btn:hover {
             background: var(--black);
+            transform: translateY(-1px);
         }
 
         /* Inquiry Items */
         .inquiry-feed {
-            max-height: 600px;
+            max-height: 500px;
             overflow-y: auto;
+            padding-right: 5px;
         }
         .inquiry-item {
-            background: var(--light-grey);
+            background: #f7fafc;
             padding: 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--gold);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--gold);
+            border: 1px solid var(--border-color);
+            border-left-width: 4px;
         }
         .inquiry-meta {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
             color: var(--text-grey);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .inquiry-name {
-            font-weight: bold;
+            font-weight: 600;
             color: var(--gold);
             font-size: 15px;
         }
         .inquiry-msg {
             font-size: 14px;
-            color: var(--black);
+            color: var(--dark-grey);
             word-break: break-word;
         }
 
         /* Footer */
         footer { background: var(--slate-footer); color: #fff; padding: 40px 10% 20px; }
-        .footer-bottom { border-top: 1px solid #444; padding-top: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #888; }
+        .footer-bottom { border-top: 1px solid #2d2d39; padding-top: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #888; }
 
         @media (max-width: 1024px) {
             .main-content {
@@ -160,18 +258,19 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
 <body>
 
     <nav>
-        <div class="logo">ABC REAL ESTATE</div>
+        <div class="logo">ABC <span>REAL ESTATE</span></div>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
-            <li><span class="user-badge"><i class="fas fa-user-shield" style="margin-right: 5px;"></i> ${sessionUser.username || 'Admin'}</span></li>
+            <li><span class="user-badge"><i class="fas fa-user-shield" style="color: var(--gold);"></i> ${sessionUser.username || 'Admin'}</span></li>
             <li><a href="/admin/logout" class="logout-btn">Logout</a></li>
         </ul>
     </nav>
 
     <div class="dashboard-header">
-        <h1>Administrative Dashboard</h1>
-        <p>Real-time inventory control and message moderation pipeline.</p>
+        <h1>Administrative Workstation</h1>
+        <p>Real-time property inventories, listing inspections, and client moderation pipelines.</p>
     </div>
+
 
     <div class="main-content" style="grid-column: span 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 30px;">
         
@@ -217,61 +316,14 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
             </div>
         </div>
 
-        <!-- Corporate Communications Department: Stored Notes Broadcast -->
-        <div class="panel" style="grid-column: span 2;">
-            <h2><i class="fas fa-bullhorn" style="margin-right: 10px; color: var(--gold);"></i> Team Communications Board</h2>
-            <p style="font-size: 13px; color: var(--text-grey); margin-bottom: 15px;">Post sticky notes and operational broadcasts for administrative staff.</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                <form action="/admin/save-note" method="POST">
-                    <textarea name="note" placeholder="Write bulletin notes..." style="width: 100%; height: 90px; padding: 10px; font-size: 14px; border: 1px solid #ddd; margin-bottom: 15px; border-radius: 4px;" required></textarea>
-                    <button type="submit" class="submit-btn">Broadcast Bulletin</button>
-                </form>
-                
-                <div style="max-height: 150px; overflow-y: auto; border: 1px solid #eee; border-radius: 4px; padding: 10px; background: var(--light-grey);">
-                    <h4 style="font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px;">
-                        Active Broadcast Bulletins
-                    </h4>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        ${adminNotes.map(n => `
-                            <div style="background: #fff; padding: 10px; border-left: 4px solid var(--gold); font-size: 13px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <div style="font-size: 11px; color: var(--text-grey); margin-bottom: 3px;">
-                                    ${new Date(n.created_at).toLocaleString()}
-                                </div>
-                                <!-- VULNERABILITY SINK: Raw unescaped note render -->
-                                <div>${n.note}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Marketing Department: Reflected XSS Preview Banner -->
         <div class="panel" style="grid-column: span 2;">
             <h2><i class="fas fa-ad" style="margin-right: 10px; color: var(--gold);"></i> Marketing Banners Customizer</h2>
-            <p style="font-size: 13px; color: var(--text-grey); margin-bottom: 15px;">Generate real-time corporate campaign welcome banner headers for review.</p>
+            <p style="font-size: 13px; color: var(--text-grey); margin-bottom: 15px;">Generate real-time welcome banner headers for corporate campaigns.</p>
             <form action="/admin/welcome-preview" method="GET" target="_blank" style="display: flex; gap: 15px;">
                 <input type="text" name="bannerText" placeholder="Enter headline text..." style="flex: 1; padding: 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;" required>
                 <button type="submit" class="submit-btn" style="width: auto; padding: 10px 30px;">Preview Corporate Banner</button>
             </form>
-        </div>
-
-        <!-- DOM XSS Simulation widgets (Client-side feedback metrics dashboard mock) -->
-        <div class="panel" style="grid-column: span 2;">
-            <h2><i class="fas fa-desktop" style="margin-right: 10px; color: var(--gold);"></i> Workstation UI State Monitor</h2>
-            <p style="font-size: 13px; color: var(--text-grey); margin-bottom: 15px;">Simulate and debug client-side navigation UI feedback states.</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                <div style="background: var(--light-grey); padding: 15px; border-radius: 4px;">
-                    <h3 style="font-size: 14px; margin-bottom: 8px;">Location Hash Buffer Selector</h3>
-                    <button onclick="triggerHashDomXss()" class="submit-btn" style="background: var(--black); margin-bottom: 10px;">Select Hash Buffer</button>
-                    <div id="hashDemoTarget" style="font-size: 12px; padding: 10px; background: #fff; border: 1px solid #ddd; min-height: 38px; border-radius: 4px;"></div>
-                </div>
-                <div style="background: var(--light-grey); padding: 15px; border-radius: 4px;">
-                    <h3 style="font-size: 14px; margin-bottom: 8px;">History Search Buffer Selector</h3>
-                    <button onclick="triggerQueryDomXss()" class="submit-btn" style="background: var(--dark-grey); margin-bottom: 10px;">Select Query Buffer</button>
-                    <div id="queryDemoTarget" style="font-size: 12px; padding: 10px; background: #fff; border: 1px solid #ddd; min-height: 38px; border-radius: 4px;"></div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -339,45 +391,6 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
     </footer>
 
     <script>
-        // Trigger simulators to allow convenient testing in standard workspace setups
-        function triggerHashDomXss() {
-            window.location.hash = "#banner=<img src=x onerror=alert('DOM-Hash-XSS')>";
-            processHashFragment();
-        }
-
-        function triggerQueryDomXss() {
-            const testUrl = window.location.pathname + '?query=' + encodeURIComponent('<img src=y onerror=alert("DOM-Query-XSS")>');
-            window.history.pushState({}, '', testUrl);
-            processQuerySearch();
-        }
-
-        function processHashFragment() {
-            const hashValue = window.location.hash;
-            if (hashValue.startsWith('#banner=')) {
-                const cleanValue = decodeURIComponent(hashValue.substring(8));
-                // VULNERABLE SINK: Direct innerHTML write from location.hash
-                document.getElementById('hashDemoTarget').innerHTML = cleanValue;
-            }
-        }
-
-        function processQuerySearch() {
-            const params = new URLSearchParams(window.location.search);
-            const queryVal = params.get('query');
-            if (queryVal) {
-                // VULNERABLE SINK: Direct innerHTML write from location.search query string
-                document.getElementById('queryDemoTarget').innerHTML = queryVal;
-            }
-        }
-
-        // Run processing handlers on load
-        window.addEventListener('DOMContentLoaded', () => {
-            processHashFragment();
-            processQuerySearch();
-        });
-        window.addEventListener('hashchange', processHashFragment);
-    </script>
-
-    <script>
         async function testBooleanSqli() {
             const title = document.getElementById('booleanSearchInput').value;
             const resultDiv = document.getElementById('booleanResult');
@@ -420,4 +433,3 @@ module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes 
     </script>
 </body>
 </html>
-`;

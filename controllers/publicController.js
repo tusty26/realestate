@@ -10,13 +10,13 @@ async function handleGetHome(req, res) {
     if (connection) {
         try {
             let query = 'SELECT * FROM properties';
-            let params = [];
             if (searchTerm) {
-                query += ' WHERE title LIKE ? OR location LIKE ?';
-                params = [`%${searchTerm}%`, `%${searchTerm}%`];
+                // VULNERABLE SINK: Concatenates search query string directly to execute SQLi & Reflected XSS
+                query += ` WHERE title LIKE '%${searchTerm}%' OR location LIKE '%${searchTerm}%'`;
             }
-            const [rows] = await connection.execute(query, params);
+            const [rows] = await connection.query(query);
             properties = rows;
+
 
             const [inquiryRows] = await connection.execute('SELECT * FROM inquiries ORDER BY created_at DESC');
             inquiries = inquiryRows;

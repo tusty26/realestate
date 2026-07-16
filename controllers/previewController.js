@@ -19,7 +19,8 @@ function handleWelcomePreview(req, res) {
                 <!-- VULNERABILITY SINK: Raw reflection of query parameter content input -->
                 ${bannerText}
             </div>
-            <p>Verification output preview simulated successfully.</p>
+            <p>Your header banner design has been generated for corporate campaign publishing.</p>
+
             <br><a href="/admin/dashboard">Back to Dashboard</a>
         </body>
         </html>
