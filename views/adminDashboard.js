@@ -1,5 +1,6 @@
-module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes = [], agentRequests = []) => `
+module.exports = (properties = [], inquiries = [], sessionUser = {}, adminNotes = [], agentRequests = [], agents = []) => `
 <!DOCTYPE html>
+
 
 <html lang="en">
 <head>

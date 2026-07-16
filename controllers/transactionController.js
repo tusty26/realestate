@@ -44,15 +44,16 @@ async function handleTransactionSearch(req, res) {
                 <title>Deal Ledger Search</title>
                 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
                 <style>
-                    body { font-family: 'Inter', sans-serif; background-color: #f8f9fc; padding: 40px; color: #0c0c0e; }
-                    h2 { font-family: 'Outfit', sans-serif; font-size: 24px; color: #1a1a22; margin-bottom: 5px; }
-                    p { color: #718096; font-size: 14px; margin-bottom: 25px; }
-                    .table-wrapper { background: #fff; border: 1px solid #edf2f7; border-radius: 12px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+                    body { font-family: 'Inter', sans-serif; background-color: #09090b; padding: 40px; color: #f8fafc; }
+                    h2 { font-family: 'Outfit', sans-serif; font-size: 24px; color: #f8fafc; margin-bottom: 5px; }
+                    p { color: #8b9bb4; font-size: 14px; margin-bottom: 25px; }
+                    .table-wrapper { background: #121217; border: 1px solid #1f1f27; border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
                     table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
-                    th, td { padding: 14px 20px; border-bottom: 1px solid #edf2f7; font-size: 14px; }
-                    th { background-color: #f7fafc; color: #718096; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #edf2f7; }
-                    .back-link { display: inline-block; margin-top: 25px; color: #f8a715; text-decoration: none; font-weight: 600; font-family: 'Outfit', sans-serif; transition: 0.3s; }
-                    .back-link:hover { color: #0c0c0e; }
+                    th, td { padding: 14px 20px; border-bottom: 1px solid #1f1f27; font-size: 14px; }
+                    th { background-color: #181822; color: #8b9bb4; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #1f1f27; }
+                    td { color: #d1d5db; }
+                    .back-link { display: inline-block; margin-top: 25px; color: #dfa83d; text-decoration: none; font-weight: 600; font-family: 'Outfit', sans-serif; transition: 0.3s; }
+                    .back-link:hover { color: #f8fafc; }
                 </style>
             </head>
             <body>
@@ -78,6 +79,7 @@ async function handleTransactionSearch(req, res) {
             </body>
             </html>
         `);
+
     } catch (err) {
         res.status(500).send(`Search Deal Error: ${err.message}<br><a href="/admin/dashboard">Back to Dashboard</a>`);
     }
